@@ -21,7 +21,7 @@ const CollapsibleComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [imageSrc, setImageSrc] = useState("/icons8-arrow-down-50.png"); // Default closed image
   const openImageSrc = "/icons8-arrow-up-30.png"; // Image when collapsible is open
-
+  const [formattedErrors, setFormattedErrors] = useState("");
   const [error, setError] = useState<string>(""); // State to manage error message
 
   // Funktion för att växla tillståndet för öppen/stängd
@@ -34,6 +34,7 @@ const CollapsibleComponent = () => {
     event: React.ChangeEvent<HTMLSelectElement>,
     fieldName: string
   ) => {
+    console.log('fieldName:', fieldName); 
     const { value } = event.target;
     setOrderData((prevData) => ({
       ...prevData,
@@ -78,16 +79,44 @@ const CollapsibleComponent = () => {
       });
       console.log("Data som skickades:", orderData);
 
-      if (response.ok) {
+      if (response .ok){
         console.log("Beställning skickad!");
         setError("");
-        // Lägg till logik för att hantera en lyckad beställning här
-      } else {
-        setError("Något gick fel vid beställning...");
-        console.error('Server error response:', await response.json());
-        // Lägg till logik för att hantera fel här
+        //Response på att ordern skickats iväg
+        alert("Ordern har nu skickats iväg och du kan se den under 'pågående ordrar'");
+    }
+      else {
+        const errorResponse = await response.json();
+        console.error('Server error response:', errorResponse);
+
+        if (errorResponse && errorResponse.message) {
+          // Display the specific error messages for each field that failed validation
+          const errorMessages = errorResponse.message.split(':')[1].trim();
+        const fieldErrors = errorMessages.split(',').map((error: string) => error.trim());
+
+        let errors = ""; 
+
+        fieldErrors.forEach((errorMessage: string) => {
+          const parts = errorMessage.split('`').slice(1, 3);
+
+          if (parts.length === 2) {
+            const [fieldName, fieldError] = parts;
+            const formattedError = `${fieldName}: ${fieldError}`;
+            errors += formattedError + ". "; 
+        
+        } else {
+          const unexpectedFormatError = `Error: du måste göra ett val för: ${errorMessage}`;
+          errors += unexpectedFormatError + ". ";
+          console.error(unexpectedFormatError);
+        
+        }
+      });
+      setFormattedErrors(errors);
+    } 
+       
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error("Något gick fel:", error);
       // Lägg till logik för att hantera nätverksfel eller andra fel här
       setError("Något gick fel. Vänligen försök igen");
@@ -95,9 +124,12 @@ const CollapsibleComponent = () => {
   };
 
   const Category = () => {
+   
     const [selectedCategory, setSelectedCategory] = useState("");
     const handleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
       const selectedValue = event.target.value;
+
+    
       /*setSelectedCategory(selectedValue);*/
       setOrderData((prevData) => ({
         ...prevData,
@@ -146,7 +178,9 @@ const CollapsibleComponent = () => {
     
     return (
       <div className="content m-4">
+       
         <form onSubmit={handleSubmit}>
+         {formattedErrors && <span className="error-message">{formattedErrors}</span>} <br></br>
           <label htmlFor="category"></label>
           <select
             name="category"
@@ -155,14 +189,15 @@ const CollapsibleComponent = () => {
             value={orderData.category}
             onChange={(event) => handleCategory(event)}
           >
-            <option value="" className="px-4 py-2">
+            <option value="default" className="px-4 py-2">
               Välj kategori
             </option>
             <option value="coffee">Kaffe</option>
             <option value="tea">Te</option>
           </select>
+         
           <br></br>
-          <label htmlFor="type"></label>
+         <label htmlFor="type"></label>
           <select
             name="type"
             id="type"
@@ -170,7 +205,7 @@ const CollapsibleComponent = () => {
             value={orderData.type}
             onChange={(event) => handlePriceOnType(event)}
           >
-            <option value="" className="px-4 py-2">
+            <option value="default" className="px-4 py-2">
               Välj sort
             </option>
             {typesToDisplay &&
@@ -190,7 +225,7 @@ const CollapsibleComponent = () => {
             value={orderData.quantity}
             onChange={(event) => handleOrder(event, "quantity")}
           >
-            <option value="" className="px-4 py-2">
+            <option value="default" className="px-4 py-2">
               Antal
             </option>
             <option value="1" className="px-4 py-2">
@@ -233,7 +268,7 @@ const CollapsibleComponent = () => {
             value={orderData.storeNameOrder}
             onChange={(event) => handleOrder(event, "storeNameOrder")}
           >
-            <option value="" className="px-4 py-2">
+            <option value="default" className="px-4 py-2">
               Butik
             </option>
             <option value="Arnes affär, Arboga" className="px-4 py-2">
