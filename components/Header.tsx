@@ -1,3 +1,8 @@
+/* Sofia Dahlberg
+Mittuniversitet Sundsvall
+Webbutvecklingsprogrammet DT162G 
+2024-01-05*/
+
 //Component header.tsx
 import React from 'react';
 import Link from 'next/link';
@@ -5,9 +10,7 @@ import styles from '../styles/header.module.css';
 
 const Header: React.FC = () => {
     return (
-        
         <header className={styles.header}>
-         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Judson&family=Julius+Sans+One&display=swap" rel="stylesheet" />
@@ -39,7 +42,7 @@ const Header: React.FC = () => {
                     </Link>
                     </li>
                     <li className="menu">
-                    <Link href="/customers" className="Link ">
+                    <Link href="/stores" className="Link ">
                         Kundbutiker
                     </Link>
                     </li>

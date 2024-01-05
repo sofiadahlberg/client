@@ -1,3 +1,8 @@
+/* Sofia Dahlberg
+Mittuniversitet Sundsvall
+Webbutvecklingsprogrammet DT162G 
+2024-01-05*/
+
 import React, { useState } from 'react';
 import Header from "../components/Header";
 import CollapsibleComponent from "../components/CollapsibleComponent";

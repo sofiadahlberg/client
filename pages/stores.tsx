@@ -1,9 +1,14 @@
+/* Sofia Dahlberg
+Mittuniversitet Sundsvall
+Webbutvecklingsprogrammet DT162G 
+2024-01-05*/
+
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ContentEditable from "react-contenteditable";
 import DOMpurify from "dompurify";
 //Tydlighet så TS förstår vilken typ av data som orders innehåller
-interface Customer {
+interface Store {
   storeCity: string;
   storeLocation: string;
   storeName: string;
@@ -12,22 +17,19 @@ interface Customer {
   storeZipcode: string;
   _id: number;
 }
-function Customers() {
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [EditInfo, setEditCustomer] = useState<{ [key: number]: string }>({});
-  const triggerEdit = (_id: number) => {
-    // Implement logic here to handle the edit action based on Id
-    console.log(`Edit triggered for customer with ID ${_id}`);
-    // You can call the necessary functions or set state here to initiate the edit process
-  };
+
+function Stores() {
+  const [stores, setStores] = useState<Store[]>([]);
+  const [EditInfo, setEditStore] = useState<{ [key: number]: string }>({});
+  
   useEffect(() => {
-    //Hämta kunder från backend
-    const fetchCustomers = async () => {
+    //Hämta butik från backend
+    const fetchStores = async () => {
       try {
         const response = await fetch("http://localhost:4000/store/");
         if (response.ok) {
           const data = await response.json();
-          setCustomers(data);
+          setStores(data);
         } else {
           throw new Error("Något gick fel vid hämtning av ordrar");
         }
@@ -35,10 +37,10 @@ function Customers() {
         console.log(error);
       }
     };
-    fetchCustomers();
+    fetchStores();
   }, []);
-
-  const deleteCustomer = async (_id: number) => {
+//Radera butik
+  const deleteStore = async (_id: number) => {
     try {
       const response = await fetch(`http://localhost:4000/store/${_id}`, {
         method: "DELETE",
@@ -46,11 +48,10 @@ function Customers() {
 
       if (response.ok) {
         // Uppdatera kunderna efter radering
-        const updatedCustomers = customers.filter(
-          (customer) => customer._id !== _id
+        const updatedStores = stores.filter(
+          (store) => store._id !== _id
         );
-        setCustomers(updatedCustomers);
-        console.log("Kund raderad!");
+        setStores(updatedStores);
       } else {
         throw new Error("Något gick fel vid radering av kund");
       }
@@ -62,42 +63,42 @@ function Customers() {
     return DOMpurify.sanitize(html);
   };
 
-  const EditCustomer = (
+  const EditStore = (
     _id: number,
-    field: keyof Customer,
-    newEditCustomer: string
+    field: keyof Store,
+    newEditStore: string
   ) => {
-    //Ändringar i kolumner + databasenS
-    const editCustomerIndex = customers.findIndex(
-      (customer) => customer._id === _id
+    //Ändringar för butiker i de olika kolumnerna 
+    const editStoreIndex = stores.findIndex(
+      (store) => store._id === _id
     );
-    if (editCustomerIndex !== -1) {
-      const updatedCustomers = customers.map((customer, index) => {
-        if (index === editCustomerIndex) {
+    if (editStoreIndex !== -1) {
+      const updatedStores = stores.map((store, index) => {
+        if (index === editStoreIndex) {
           return {
-            ...customer,
-            [field]: newEditCustomer,
+            ...store,
+            [field]: newEditStore,
           };
         }
-        return customer;
+        return store;
       });
-      setCustomers(updatedCustomers);
+      setStores(updatedStores);
 
-      updateCustomer(_id, updatedCustomers[editCustomerIndex]);
+      updateStore(_id, updatedStores[editStoreIndex]);
     } else {
-      console.error("Customer not found");
+      console.error("Store not found");
     }
   };
 
-  //Ändra customer
-  const updateCustomer = async (Id: number, updatedCustomer: Customer) => {
+  //Uppdatera butikernas ändringar i databasen
+  const updateStore = async (Id: number, updatedStore: Store) => {
     try {
       const response = await fetch(`http://localhost:4000/store/${Id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedCustomer),
+        body: JSON.stringify(updatedStore),
       });
       if (response.ok) {
         console.log("Butikens uppgifter uppdaterad i databasen!");
@@ -108,41 +109,41 @@ function Customers() {
       console.error("Något gick fel:", error);
     }
   };
-
+//Skriva ut butikinformation i articleelement. 
   return (
     <div className="main ">
       <Header />
       <div>
         <h1>Nuvarande kundbutiker</h1>
         <ul>
-          {customers.map((customer, index) => (
-            <div key={customer._id} className="articlediv">
+          {stores.map((store, index) => (
+            <div key={store._id} className="articlediv">
               <article key={index}>
                 <div className="storeStyle">
                   <ContentEditable
-                    html={sanitizeHTML(customer.storeName)}
+                    html={sanitizeHTML(store.storeName)}
                     disabled={false}
                     onChange={(e) =>
-                      EditCustomer(customer._id, "storeName", e.target.value)
+                      EditStore(store._id, "storeName", e.target.value)
                     }
                   />
                 </div>
                 <div className="storeCity">
                   <ContentEditable
-                    html={sanitizeHTML(customer.storeCity)}
+                    html={sanitizeHTML(store.storeCity)}
                     disabled={false}
                     onChange={(e) =>
-                      EditCustomer(customer._id, "storeCity", e.target.value)
+                      EditStore(store._id, "storeCity", e.target.value)
                     }
                   />
                 </div>
                 <div className="storeLocation">
                   <ContentEditable
-                    html={sanitizeHTML(customer.storeLocation)}
+                    html={sanitizeHTML(store.storeLocation)}
                     disabled={false}
                     onChange={(e) =>
-                      EditCustomer(
-                        customer._id,
+                      EditStore(
+                        store._id,
                         "storeLocation",
                         e.target.value
                       )
@@ -151,36 +152,36 @@ function Customers() {
                 </div>
                 <div className="storeZip">
                   <ContentEditable
-                    html={sanitizeHTML(customer.storeZipcode)}
+                    html={sanitizeHTML(store.storeZipcode)}
                     disabled={false}
                     onChange={(e) =>
-                      EditCustomer(customer._id, "storeZipcode", e.target.value)
+                      EditStore(store._id, "storeZipcode", e.target.value)
                     }
                   />
                 </div>
                 <div className="storeEmail">
                   <ContentEditable
-                    html={sanitizeHTML(customer.storeEmail)}
+                    html={sanitizeHTML(store.storeEmail)}
                     disabled={false}
                     onChange={(e) =>
-                      EditCustomer(customer._id, "storeEmail", e.target.value)
+                      EditStore(store._id, "storeEmail", e.target.value)
                     }
                   />
                 </div>
                 <div className="storeNumber">
                   <ContentEditable
-                    html={sanitizeHTML(customer.storeNumber)}
+                    html={sanitizeHTML(store.storeNumber)}
                     disabled={false}
                     onChange={(e) =>
-                      EditCustomer(customer._id, "storeNumber", e.target.value)
+                      EditStore(store._id, "storeNumber", e.target.value)
                     }
                   />
                 </div>
                 <div className="btndiv">
                   <button
                     onClick={() => {
-                      console.log("Deleting customer with _id:", customer._id);
-                      deleteCustomer(customer._id);
+                    
+                      deleteStore(store._id);
                     }}
                     className="deleteBtn"
                   >
@@ -195,4 +196,4 @@ function Customers() {
     </div>
   );
 }
-export default Customers;
+export default Stores;

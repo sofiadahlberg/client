@@ -1,3 +1,8 @@
+/* Sofia Dahlberg
+Mittuniversitet Sundsvall
+Webbutvecklingsprogrammet DT162G 
+2024-01-05*/
+
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ContentEditable from "react-contenteditable";
@@ -14,13 +19,8 @@ interface Order {
 
 function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
-
   const [editable, setEditable] = useState<{ [key: number]: string }>({});
-  const triggerEdit = (_id: number) => {
-    // Implement logic here to handle the edit action based on Id
-    console.log(`Edit triggered for customer with ID ${_id}`);
-    // You can call the necessary functions or set state here to initiate the edit process
-  };
+ 
   useEffect(() => {
     //Funktion för att hämta ordrar från backend
     const fetchOrders = async () => {
@@ -38,11 +38,11 @@ function Orders() {
     };
     fetchOrders(); // Funktion som hämtar ordrar
   }, []);
+
   //radera order
   const deleteOrder = async (_id: number) => {
     try {
-      console.log("Deleting order with ID:", _id); // Log to check the ID
-    
+     
       const response = await fetch(`http://localhost:4000/order/${_id}`, {
         method: "DELETE",
       });
@@ -51,7 +51,7 @@ function Orders() {
         // Uppdatera kunderna efter radering
         const updatedOrders = orders.filter((order) => order._id !== _id);
         setOrders(updatedOrders);
-        console.log("Order raderad!");
+      
       } else {
         throw new Error("Något gick fel vid radering av kund");
       }
@@ -87,7 +87,7 @@ function Orders() {
     }
   };
 
-  // Ändra order
+  // Uppdatera order i databas
   const updateOrder = async (_id: number, updatedOrder: Order) => {
     try {
       const response = await fetch(`http://localhost:4000/order/${_id}`, {
@@ -107,7 +107,8 @@ function Orders() {
       console.error("Något gick fel:", error);
     }
   };
-
+  
+//Med get skriva ut orderinformation med articleelement
   return (
     <div className="main ">
       <Header />
@@ -164,8 +165,6 @@ function Orders() {
 
                 <button
                   onClick={() => {
-                    console.log("Deleting customer with _id:", order._id);
-
                     deleteOrder(order._id);
                   }}
                   className="deleteBtn"

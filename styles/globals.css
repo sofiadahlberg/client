@@ -1,12 +1,29 @@
+
+/* Sofia Dahlberg
+Mittuniversitet Sundsvall
+Webbutvecklingsprogrammet DT162G 
+2024-01-05*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.error-message {
+
+.error-messageStore {
     color: red;
-    font-size: 16px;
+    font-size: 20px;
     margin-top: 5px;
-font-weight: bold;
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 1%;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+    }
+  .error-message{
+    color: red;
+    font-size: 18px;
+    margin-top: 5px;
+    font-weight: bold;
   }
+
 .main{
     background-color:#FCF0DF ;
 }
