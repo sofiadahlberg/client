@@ -508,12 +508,12 @@ select{
            
           }
           .storeOrder{
-            width: 28%;
+            width: 42%;
             margin: 2% auto;
           }
           .flex-grow{
             font-family: 'Josefin Sans', sans-serif;
-            width: 15em;
+            width: 16em;
             font-size: 1.3em;
         }
         .ml-20{
@@ -597,6 +597,7 @@ select{
         font-size: 1.7em;
        text-align: center;
        padding: 2%;
+       width: 100%;
       
         }
         /* slut på header styling */
