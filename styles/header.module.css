@@ -1,9 +1,11 @@
+
 .background {
-    background-image: url('/coffee600.jpg');
+    background-image: url('/coffeemedium1.jpg');
     background-position: center;
     height: 300px; /* Set the height you prefer */
     position: relative;
     background-repeat: no-repeat;
+    background-color: black;
   }
   .circleheader{
     width: 52%; /* Justera storleken på cirkeln efter behov */
@@ -41,7 +43,7 @@
     
   }
   @media only screen and (min-width: 601px) and (max-width: 800px) {
-   
+  
     .header h1{
       margin: 0;
       padding: 0;
@@ -66,6 +68,12 @@
     
   }
   @media only screen and (min-width: 801px) {
+    .background{
+      background-image: url('/coffeebig2.jpg');
+      background-position: center;
+   
+    position: relative;
+     }
     .header h1{
       margin: 0;
       padding: 0;

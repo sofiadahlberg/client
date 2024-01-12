@@ -36,7 +36,7 @@ function Index() {
         <h3 className="h3class">Våra kaffesorter:</h3>
 
         
-        <div className="products">
+        <div className="products m-4">
           <div className="shop flex items-center justify-between">
             <img src="/capsules150.jpg" className="productimages"></img>
             <h4 className="h4class">Kapsyler</h4>

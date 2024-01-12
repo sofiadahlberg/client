@@ -31,7 +31,7 @@ const TeaPage = () => {
 
       <h2 className="h2class">Beställ te till eran butik</h2>
         <h3 className="h3class">Våra tesorter:</h3>
-        <div className="products">
+        <div className="products m-4">
         <div className="shop flex items-center justify-between">
           <img src="/minze150.jpg" className="productimages"></img>
           <h4 className="h4class">Tepåsar</h4>

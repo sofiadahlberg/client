@@ -30,7 +30,7 @@ const Header: React.FC = () => {
                 <p className="headerText">Kaffe & Te </p>
             </div>
             <nav className="md:flex md:justify-center md:items-center">
-                <ul className="ulmenu flex justify-center items-center md:w-3/4 lg:w-2/4">
+                <ul className="ulmenu flex justify-center items-center md:w-4/4 lg:w-4/4">
                    <li className="menu ">
                     <Link href="/"  className="Link">
                         Startsida
