@@ -47,6 +47,8 @@ function Stores() {
       });
 
       if (response.ok) {
+         // alert meddelade att butik raderats korrekt
+      alert("Butiken är nu raderad!");
         // Uppdatera kunderna efter radering
         const updatedStores = stores.filter(
           (store) => store._id !== _id
@@ -113,8 +115,12 @@ function Stores() {
   return (
     <div className="main ">
       <Header />
-      <div>
+      <div className="containerStore">
         <h1>Nuvarande kundbutiker</h1>
+        <aside>
+        <p className="aside">Vid ändringar i kundbutik
+         kan texten ändras direkt på raden.</p>
+        </aside>
         <ul>
           {stores.map((store, index) => (
             <div key={store._id} className="articlediv">

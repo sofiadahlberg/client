@@ -40,6 +40,7 @@ li:first-child {
   .menu:hover {
     background-color: #f58a54;
     color: #000000;
+    text-decoration: underline;
   }
   .coffee:hover, .tea:hover{
     background-color: #f58a54;
@@ -203,6 +204,14 @@ article{
     align-items: center;
     /* Anpassa höjden efter behov, här sätts den till hela skärmens höjd */
 }
+aside{
+    margin: auto;
+      box-shadow: inset 5px 5px 10px 1px #666868;
+      font-style: italic;
+      color: #303030;
+     width: 70%;
+      padding: 2%;
+    }
 .storeStyle, .categoryStyle{
     font-family: 'Judson', sans-serif;
     font-size: 1.8em;
@@ -391,6 +400,14 @@ article{
     justify-content: center;
     align-items: center;
     /* Anpassa höjden efter behov, här sätts den till hela skärmens höjd */
+}
+aside{   
+margin: auto;
+  box-shadow: inset 5px 5px 10px 1px #666868;
+  font-style: italic;
+  color: #303030;
+ width: 50%;
+  padding: 2%;
 }
 .storeStyle, .categoryStyle{
     font-family: 'Judson', sans-serif;
@@ -589,15 +606,26 @@ select{
     article{
         background-color: rgb(216, 216, 216);
         border: #000000 solid 1px;
-       padding: 4% 10%;
-       margin: 5%;
+       padding: 4% 5%;
+       margin: 2%;
     }
+   
     .articlediv{
         display: flex;
         justify-content: center;
-        align-items: center;
+      
+        
         /* Anpassa höjden efter behov, här sätts den till hela skärmens höjd */
     }
+
+    aside{
+        margin: auto;
+          box-shadow: inset 5px 5px 10px 1px #666868;
+          font-style: italic;
+          color: #303030;
+         width: 30%;
+          padding: 2%;
+        }
     .storeStyle, .categoryStyle{
         font-family: 'Judson', sans-serif;
         font-size: 1.8em;
@@ -688,5 +716,7 @@ select{
     background-color: #f58a54;
     color: #000000;
 }
+
+
     
 }

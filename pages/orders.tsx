@@ -48,6 +48,8 @@ function Orders() {
       });
 
       if (response.ok) {
+        // alertmeddelade att butik raderats korrekt
+      alert("Ordern är nu raderad!");
         // Uppdatera kunderna efter radering
         const updatedOrders = orders.filter((order) => order._id !== _id);
         setOrders(updatedOrders);
@@ -114,6 +116,10 @@ function Orders() {
       <Header />
       <div>
         <h1>Ordrar</h1>
+        <aside>
+        <p className="aside">Vid ändringar i ordern
+         kan texten ändras direkt på raden.</p>
+        </aside>
         <ul>
           {orders.map((order, index) => (
             <div key={order._id} className="articlediv">

@@ -42,6 +42,15 @@ const Footer: React.FC = () => {
       });
 
       if (response.ok) {
+         // Rensa inputfälten vid ok response
+      setFormData({
+        storeName: "",
+        storeCity: "",
+        storeLocation: "",
+        storeNumber: "",
+        storeEmail: "",
+        storeZipcode: "",
+      });
         // Altermeddelande till användare
         alert("Butiken är nu inlagd i systemet och det går att beställa!");
       } else {
