@@ -43,7 +43,7 @@ li:first-child {
     text-decoration: underline;
   }
   .coffee:hover, .tea:hover{
-    background-color: #f58a54;
+    background-color: #9e3f0f;
     
 }
 .storeCity, .StoreLocation, .storeZip, .storeEmail, .typeStyle, .quantitystyle, .storeOrderStyle{
@@ -509,7 +509,7 @@ select{
            
           }
           .storeOrder{
-            width: 42%;
+            width: 30%;
             margin: 2% auto;
           }
           .flex-grow{
