@@ -66,6 +66,17 @@ const Footer: React.FC = () => {
             .map((error: string) => error.trim());
 
           let errors = "";
+          //Skriver i fältnamn till de benämnda
+          const fieldMappings: { [key: string]: string } = {
+            storeName: "Butiksnamn",
+            storeLocation: "Adress",
+            storeZipcode: "Postnummer",
+            storeCity: "Stad",
+            storeEmail: "Email-adress",
+            storeNumber: "Telefonnummer",
+            // Add more mappings as needed
+          };
+          
           //Separerar de olika felmeddelandena
           fieldErrors.forEach((errorMessage: string) => {
             const parts = errorMessage.split("`").slice(1, 3);
@@ -77,8 +88,8 @@ const Footer: React.FC = () => {
               errors += formattedError + ". ";
             } else {
               //Utskrift av felmeddelandet
-              const FormatError = `Error: du måste göra ett val för: ${errorMessage}`;
-              errors += FormatError + ". ";
+              const FormatError = `Error: Du får inte lämna något fält tomt`;
+              errors += FormatError + " ";
               console.error(FormatError);
             }
           });

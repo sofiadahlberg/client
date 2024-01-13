@@ -100,7 +100,7 @@ const CollapsibleComponent = () => {
               const formattedError = `${fieldName}: ${fieldError}`;
               errors += formattedError + ". ";
             } else {
-              const unexpectedFormatError = `Error: du måste göra ett val för: ${errorMessage}`;
+              const unexpectedFormatError = `Error: Du får inte lämna något fält tomt`;
               errors += unexpectedFormatError + ". ";
               console.error(unexpectedFormatError);
             }
